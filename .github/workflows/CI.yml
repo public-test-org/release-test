@@ -6,7 +6,7 @@ on:
 
 env:
   DOCKER_USERNAME: ptgladk
-  REPO: ptgladk/release
+  REPO: ptgladk/testrepo
 
 jobs:
   docker:
