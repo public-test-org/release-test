@@ -32,10 +32,10 @@ jobs:
           tags: ${{ env.REPO }}:latest,${{ env.REPO }}:${{ env.TAG }}
 
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.TAG }}
-          release_name: ${{ env.TAG }}
+          token: ${{ secrets.github_token }}
+          tag: ${{ steps.versioning.outputs.version }}
+          name: ${{ steps.versioning.outputs.version }}
           prerelease: true
+          allowUpdates: true
