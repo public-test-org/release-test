@@ -7,6 +7,7 @@ on:
 env:
   DOCKER_USERNAME: ptgladk
   REPO: ptgladk/testrepo
+  TAG: 'v1.0.0-alpha'
 
 jobs:
   docker:
@@ -28,13 +29,13 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ env.REPO }}:latest,${{ env.REPO }}:${{ steps.versioning.outputs.version }}
+          tags: ${{ env.REPO }}:latest,${{ env.REPO }}:${{ env.TAG }}
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
-          tag_name: 'v1.0.0-alpha'
-          release_name: 'v1.0.0-alpha'
+          tag_name: ${{ env.TAG }}
+          release_name: ${{ env.TAG }}
           prerelease: true
