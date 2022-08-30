@@ -22,6 +22,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.tag.outputs.tag }}
         run: |
+          echo $GITHUB_REF
           echo $RELEASE_VERSION
           echo ${{ steps.tag.outputs.tag }}
           
