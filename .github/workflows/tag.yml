@@ -8,7 +8,7 @@ on:
       - develop
   push:
     branches:
-      - 'release/**'
+      - main
       - develop
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
@@ -24,6 +24,7 @@ jobs:
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
       - run: echo ${GITHUB_REF}
+      - run: echo ${GITHUB_HEAD_REF}
       - run: echo ${GITHUB_SHA}
       - uses: actions/checkout@v3
 
@@ -34,7 +35,7 @@ jobs:
         id: tag
         run: |
           if [[ ${{ github.ref }} =~ ^refs/heads/release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo ::set-output name=tag::${GITHUB_REF#refs/heads/release/}-something
+              echo ::set-output name=tag::${GITHUB_HEAD_REF#release/}-something
           elif [[ ${{ github.ref }} =~ ^refs/heads/develop$ ]]; then
               echo ::set-output name=tag::develop
           elif [[ ${{ github.ref }} =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
