@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'release/**'
+      - develop
 
 jobs:
   build:
@@ -15,9 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+#      - name: Set tag
+#        id: tag
+#        run: echo ::set-output name=tag::${GITHUB_REF#refs/heads/release/}
       - name: Set tag
         id: tag
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/heads/release/}
+        run: |
+          if [[ ${{ github.ref }} =~ ^refs/heads/release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo ::set-output name=tag::${GITHUB_REF#refs/heads/release/}
+          elif [[ ${{ github.ref }} =~ ^refs/heads/develop$ ]]; then
+              echo ::set-output name=tag::develop
+          elif [[ ${{ github.ref }} =~ ^refs/tags/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
+          fi
       - name: Check output
         env:
           RELEASE_VERSION: ${{ steps.tag.outputs.tag }}
