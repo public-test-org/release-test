@@ -1,8 +1,8 @@
 name: release
-on:
-  push:
-    tags:
-      - 'v*'
+#on:
+#  push:
+#    tags:
+#      - 'v*'
 
 env:
   DOCKER_USERNAME: ptgladk
