@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     name: Build
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
     steps:
@@ -26,6 +27,7 @@ jobs:
           
   smoke:
     name: Build
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - run: echo ${{ needs.build.outputs.tag }}
